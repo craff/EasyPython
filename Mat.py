@@ -152,12 +152,12 @@ class Poly(Vec):
 
        En plus des opérateurs sur les vecteurs, on a:
        - P * Q: change de sens, c'est le produit de polynômes,
-         par le produit scalaire
+         par le produit scalaire.
        - P // Q: quotient de la division euclidienne
        - P % Q: reste de la divition euclidienne
 
        Les polynômes sont "callable". On peut écrire P(x) pour évaluer
-       le polynôme en x
+       le polynôme en x. On peut évaluer un polynôme sur une matrice carrée.
        """
     def deg(self):
         """`P.deg()` donne le degré de P"""
@@ -201,6 +201,7 @@ class Poly(Vec):
         else: return self.zero
         
     def cl(self, a, p, shift = 0):
+        """`P.cl(a,Q)` renvoie P + a Q"""
         return Poly(coefs=[self[i] + a * p[i-shift]
                 for i in range(max(len(self), len(p) + shift))])
     
@@ -268,6 +269,7 @@ class Poly(Vec):
         return p.euclidian_div(self)[1]
 
     def copy(self):
+        """`P.copy()` copie le polynéôme P"""
         return Poly(deg=self.deg(),init = lambda i: self[i])
 
     def __eq__(self, vec):
@@ -284,9 +286,10 @@ class Poly(Vec):
             r += self[i]
         return(r)
     
-#    def __neq__(self, m): return not (self == m)
-
 class Monome(Poly):
+    """Contructeur de la classe `Polynome pour créer un monome:
+       `Poly(d,c)` crée le polynôme c X^d. L'argument optionel zero, permet
+       de préciser la représentation du coefficient zero."""
     def __init__(self,deg,c, zero = 0):
         Poly.__init__(self,deg=deg, init =  lambda i: c if i == deg else 0)
         
